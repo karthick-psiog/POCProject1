@@ -11,6 +11,6 @@ namespace ORM.Models
         [Key]
         public string PIN { get; set; }
 
-        public int?  isactive { get; set; }
+        public Boolean? isactive { get; set; }
     }
 }

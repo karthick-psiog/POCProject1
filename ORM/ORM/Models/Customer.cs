@@ -10,12 +10,14 @@ namespace ORM.Models
     public class Customer
     {
         // Foreign Key as Primary Key
-        [Required]
-        [Key, ForeignKey("User")]
+        [Key]
+        [ForeignKey("User")]
+        [Column(Order = 0)]
         public int userid { get; set; }
 
         [Key]
         [StringLength(15), Required]
+        [Column(Order = 1)]
         public string mobile { get; set; }
 
         [Required]
@@ -34,8 +36,9 @@ namespace ORM.Models
         public string city { get; set; }
 
         // Foreign Key [Primart key of 'ServiceArea']
-        [Key, ForeignKey("ServiceArea")]
-        public int PIN { get; set; }
+        [ForeignKey("ServiceArea")]
+        [Column(Order = 2)]
+        public string PIN { get; set; }
 
         [StringLength(50), Required]
         public string state { get; set; }

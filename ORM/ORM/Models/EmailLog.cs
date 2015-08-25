@@ -10,8 +10,8 @@ namespace ORM.Models
     public class EmailLog
     {
         // Foreign Key as Primary Key
-        [Required]
         [Key, ForeignKey("AuditLog")]
+        [Column(Order = 0)]
         public int transid { get; set; }
 
         [StringLength(50), Required]

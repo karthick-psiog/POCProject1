@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -11,10 +12,12 @@ namespace ORM.Models
         [Key]
         public int transid { get; set; }
 
-        [Key] //Foreign Key [Primart key of 'Customer']
+        [ForeignKey("User")]
+        [Column(Order = 0)]
         public int userid { get; set; }
 
-        [Key] //Foreign Key [Primart key of 'EventType']
+        [ForeignKey("EventType")]
+        [Column(Order = 1)]
         public int eventtypeid { get; set; }
 
         [StringLength(1000), Required]
@@ -27,7 +30,7 @@ namespace ORM.Models
         public DateTime logtimestamp { get; set; }
 
         // Foreign Key Reference
-        public Customer Customer { get; set; }
+        public User User { get; set; }
         public EventType EventType { get; set; }
 
     }

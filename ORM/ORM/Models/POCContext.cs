@@ -11,8 +11,16 @@ namespace ORM.Models
         {
         }
 
+        public DbSet<User> User { get; set; }
+        public DbSet<Customer> Customer { get; set; }
+        public DbSet<ServiceArea> ServiceArea { get; set; }
+        public DbSet<EventType> EventType { get; set; }
+        public DbSet<AuditLog> AuditLog { get; set; }
+        public DbSet<EmailLog> EmailLog { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
         }
     }
 }

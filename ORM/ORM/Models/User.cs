@@ -20,5 +20,7 @@ namespace ORM.Models
         public DateTime? lastmodifieddate { get; set; }
 
         public DateTime? lastlogindate { get; set; }
+
+        public Boolean? isactive { get; set; }
     }
 }

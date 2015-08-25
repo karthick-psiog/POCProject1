@@ -13,5 +13,7 @@ namespace ORM.Models
 
         [StringLength(150), Required]
         public string eventtype { get; set; }
+
+        public Boolean? isactive { get; set; }
     }
 }
