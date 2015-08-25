@@ -11,7 +11,7 @@ namespace ORM.Models
         [Key]
         public int userid { get; set; }
 
-        [StringLength(50), Required]
+        [StringLength(100), Required]
         public string encryptedpwd { get; set; }
 
         [Required]
