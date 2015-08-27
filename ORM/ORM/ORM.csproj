@@ -96,25 +96,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201508250955474_InitialSetup.cs" />
-    <Compile Include="Migrations\201508250955474_InitialSetup.Designer.cs">
-      <DependentUpon>201508250955474_InitialSetup.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508251116472_TableCreation.cs" />
-    <Compile Include="Migrations\201508251116472_TableCreation.Designer.cs">
-      <DependentUpon>201508251116472_TableCreation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508251118153_TableCreation1.cs" />
-    <Compile Include="Migrations\201508251118153_TableCreation1.Designer.cs">
-      <DependentUpon>201508251118153_TableCreation1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508251119287_TableCreation2.cs" />
-    <Compile Include="Migrations\201508251119287_TableCreation2.Designer.cs">
-      <DependentUpon>201508251119287_TableCreation2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508251127279_TableCreation3.cs" />
-    <Compile Include="Migrations\201508251127279_TableCreation3.Designer.cs">
-      <DependentUpon>201508251127279_TableCreation3.cs</DependentUpon>
+    <Compile Include="Migrations\201508270654123_PluralizingRemove.cs" />
+    <Compile Include="Migrations\201508270654123_PluralizingRemove.Designer.cs">
+      <DependentUpon>201508270654123_PluralizingRemove.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuditLog.cs" />
@@ -141,20 +125,8 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201508250955474_InitialSetup.resx">
-      <DependentUpon>201508250955474_InitialSetup.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508251116472_TableCreation.resx">
-      <DependentUpon>201508251116472_TableCreation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508251118153_TableCreation1.resx">
-      <DependentUpon>201508251118153_TableCreation1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508251119287_TableCreation2.resx">
-      <DependentUpon>201508251119287_TableCreation2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508251127279_TableCreation3.resx">
-      <DependentUpon>201508251127279_TableCreation3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201508270654123_PluralizingRemove.resx">
+      <DependentUpon>201508270654123_PluralizingRemove.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

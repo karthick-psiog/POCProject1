@@ -7,13 +7,13 @@ namespace ORM.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class TableCreation3 : IMigrationMetadata
+    public sealed partial class PluralizingRemove : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(TableCreation3));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(PluralizingRemove));
         
         string IMigrationMetadata.Id
         {
-            get { return "201508251127279_TableCreation3"; }
+            get { return "201508270654123_PluralizingRemove"; }
         }
         
         string IMigrationMetadata.Source

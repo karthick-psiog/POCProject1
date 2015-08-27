@@ -4,6 +4,7 @@ namespace ORM.Models
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using System.Data.Entity.ModelConfiguration.Conventions;
 
     public partial class POCContext : DbContext
     {
@@ -20,7 +21,7 @@ namespace ORM.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
     }
 }
