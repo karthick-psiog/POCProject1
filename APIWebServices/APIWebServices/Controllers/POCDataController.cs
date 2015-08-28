@@ -8,7 +8,7 @@ using System.Web.Http;
 
 namespace APIWebServices.Controllers
 {
-    [RoutePrefix("api/data")]
+    [RoutePrefix("")]
     [Authorize]
     public class POCDataController : ApiController
     {
@@ -19,5 +19,36 @@ namespace APIWebServices.Controllers
             var userName = principal.Claims.Where(c => c.Type == "sub").Single().Value;
             return Ok("You are allowed to request data");
         }
+
+        [Route("customer/mobile")]
+        public IHttpActionResult CheckAvailability()
+        {
+            return Ok("mobile number is available : ");
+        }
+
+        [Route("servicearea/pin")]
+        public IHttpActionResult CheckServiceability()
+        {
+            return Ok("PIN is available");
+        }
+
+        [Route("remotecustomer/mobile")]
+        public IHttpActionResult CheckRemoteAvailability()
+        {
+            return Ok("Remote Cutomer mobile number is available");
+        }
+
+        [Route("registeruser")]
+        public IHttpActionResult RegisterUser()
+        {
+            return Ok("Successfully Registered");
+        }
+
+        [Route("remotenotify")]
+        public IHttpActionResult RemoteNotification()
+        {
+            return Ok("Remote Notification is successfully completed");
+        }
+        
     }
 }
