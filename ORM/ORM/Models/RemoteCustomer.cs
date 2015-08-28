@@ -41,5 +41,6 @@ namespace ORM.Models
         [StringLength(50), Required]
         public string country { get; set; }
 
+        public Boolean? isactive { get; set; }
     }
 }

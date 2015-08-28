@@ -108,6 +108,10 @@
     <Compile Include="Migrations\201508280726449_AddRemoteCustomerTable.Designer.cs">
       <DependentUpon>201508280726449_AddRemoteCustomerTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508280733421_AddRemoteCustomerActiveStatus.cs" />
+    <Compile Include="Migrations\201508280733421_AddRemoteCustomerActiveStatus.Designer.cs">
+      <DependentUpon>201508280733421_AddRemoteCustomerActiveStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuditLog.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -142,6 +146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508280726449_AddRemoteCustomerTable.resx">
       <DependentUpon>201508280726449_AddRemoteCustomerTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508280733421_AddRemoteCustomerActiveStatus.resx">
+      <DependentUpon>201508280733421_AddRemoteCustomerActiveStatus.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
