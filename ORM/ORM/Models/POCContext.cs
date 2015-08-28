@@ -18,6 +18,7 @@ namespace ORM.Models
         public DbSet<EventType> EventType { get; set; }
         public DbSet<AuditLog> AuditLog { get; set; }
         public DbSet<EmailLog> EmailLog { get; set; }
+        public DbSet<RemoteCustomer> RemoteCustomer { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

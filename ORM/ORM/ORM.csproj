@@ -100,12 +100,21 @@
     <Compile Include="Migrations\201508270654123_PluralizingRemove.Designer.cs">
       <DependentUpon>201508270654123_PluralizingRemove.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508280723226_AddUNIQUEKey.cs" />
+    <Compile Include="Migrations\201508280723226_AddUNIQUEKey.Designer.cs">
+      <DependentUpon>201508280723226_AddUNIQUEKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508280726449_AddRemoteCustomerTable.cs" />
+    <Compile Include="Migrations\201508280726449_AddRemoteCustomerTable.Designer.cs">
+      <DependentUpon>201508280726449_AddRemoteCustomerTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuditLog.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\EmailLog.cs" />
     <Compile Include="Models\EventType.cs" />
     <Compile Include="Models\POCContext.cs" />
+    <Compile Include="Models\RemoteCustomer.cs" />
     <Compile Include="Models\ServiceArea.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -127,6 +136,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201508270654123_PluralizingRemove.resx">
       <DependentUpon>201508270654123_PluralizingRemove.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508280723226_AddUNIQUEKey.resx">
+      <DependentUpon>201508280723226_AddUNIQUEKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508280726449_AddRemoteCustomerTable.resx">
+      <DependentUpon>201508280726449_AddRemoteCustomerTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
