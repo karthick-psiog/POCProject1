@@ -22,24 +22,24 @@ namespace APIWebServices.Controllers
         }
 
         [HttpGet()]
-        [Route("customer/mobile")]
-        public String CheckAvailability([FromUri] String mobile)
+        [Route("customer/mobile/{mobilenum}")]
+        public String CheckAvailability(String mobilenum)
         {
-            return "mobile number is available : " + mobile.ToString();
+            return "mobile number is available : " + mobilenum.ToString();
         }
 
         [HttpGet()]
-        [Route("servicearea/pin")]
-        public String CheckServiceability(String PIN)
+        [Route("servicearea/pin/{PINCode}")]
+        public String CheckServiceability(String PINCode)
         {
-            return "PIN is available: " +PIN.ToString();
+            return "PIN is available: " + PINCode.ToString();
         }
 
         [HttpGet()]
-        [Route("remotecustomer/mobile")]
-        public IHttpActionResult CheckRemoteAvailability(String mobile)
+        [Route("remotecustomer/mobile/{mobilenum}")]
+        public IHttpActionResult CheckRemoteAvailability(String mobilenum)
         {
-            return Ok("Remote Cutomer mobile number is available: " + mobile.ToString());
+            return Ok("Remote Cutomer mobile number is available: " + mobilenum.ToString());
         }
 
         [HttpPost()]
