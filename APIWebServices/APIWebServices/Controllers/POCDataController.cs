@@ -28,7 +28,7 @@ namespace APIWebServices.Controllers
             try
             { 
                 if (mobilenum == null)
-                    return Request.CreateResponse(HttpStatusCode.NotFound, "False");
+                    return Request.CreateResponse(HttpStatusCode.OK, "False");
                 else
                     return Request.CreateResponse(HttpStatusCode.OK, "True");
              }
@@ -45,7 +45,7 @@ namespace APIWebServices.Controllers
             try
             { 
                 if (PINCode == null)
-                    return Request.CreateResponse(HttpStatusCode.NotFound, "False");
+                    return Request.CreateResponse(HttpStatusCode.OK, "False");
                 else
                     return Request.CreateResponse(HttpStatusCode.OK, "True"); 
             }
@@ -63,7 +63,7 @@ namespace APIWebServices.Controllers
             try
             { 
                 if (mobilenum == null)
-                    return Request.CreateResponse(HttpStatusCode.NotFound, "False");
+                    return Request.CreateResponse(HttpStatusCode.OK, "False");
                 else
                     return Request.CreateResponse(HttpStatusCode.OK, "True");
             }
@@ -78,8 +78,8 @@ namespace APIWebServices.Controllers
         public HttpResponseMessage RegisterUser(User userinfo)
         {
             try
-            { 
-                return Request.CreateResponse(HttpStatusCode.Created, " Successfully Registered ");
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, " Successfully Registered " + userinfo.firstname);
             }
             catch (Exception ex)  
             {
@@ -93,7 +93,7 @@ namespace APIWebServices.Controllers
         {
             try
             {
-                return Request.CreateResponse(HttpStatusCode.Gone, " Successfully Sent ");
+                return Request.CreateResponse(HttpStatusCode.OK, " Successfully Sent ");
             }
             catch (Exception ex)
             {
