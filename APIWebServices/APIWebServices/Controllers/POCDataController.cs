@@ -23,38 +23,82 @@ namespace APIWebServices.Controllers
 
         [HttpGet()]
         [Route("customer/mobile/{mobilenum}")]
-        public String CheckAvailability(String mobilenum)
+        public HttpResponseMessage CheckAvailability(String mobilenum)
         {
-            return "mobile number is available : " + mobilenum.ToString();
+            try
+            { 
+                if (mobilenum == null)
+                    return Request.CreateResponse(HttpStatusCode.NotFound, "False");
+                else
+                    return Request.CreateResponse(HttpStatusCode.OK, "True");
+             }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Error Message : " + ex.ToString());
+            }
         }
 
         [HttpGet()]
         [Route("servicearea/pin/{PINCode}")]
-        public String CheckServiceability(String PINCode)
+        public HttpResponseMessage CheckServiceability(String PINCode)
         {
-            return "PIN is available: " + PINCode.ToString();
+            try
+            { 
+                if (PINCode == null)
+                    return Request.CreateResponse(HttpStatusCode.NotFound, "False");
+                else
+                    return Request.CreateResponse(HttpStatusCode.OK, "True"); 
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Error Message : " + ex.ToString());
+            }
+
         }
 
         [HttpGet()]
         [Route("remotecustomer/mobile/{mobilenum}")]
-        public IHttpActionResult CheckRemoteAvailability(String mobilenum)
+        public HttpResponseMessage CheckRemoteAvailability(String mobilenum)
         {
-            return Ok("Remote Cutomer mobile number is available: " + mobilenum.ToString());
+            try
+            { 
+                if (mobilenum == null)
+                    return Request.CreateResponse(HttpStatusCode.NotFound, "False");
+                else
+                    return Request.CreateResponse(HttpStatusCode.OK, "True");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Error Message : " + ex.ToString());
+            }
         }
 
         [HttpPost()]
         [Route("registeruser")]
-        public IHttpActionResult RegisterUser(User userinfo)
+        public HttpResponseMessage RegisterUser(User userinfo)
         {
-            
-            return Ok("Successfully Registered" + userinfo.firstname.ToString());
+            try
+            { 
+                return Request.CreateResponse(HttpStatusCode.Created, " Successfully Registered ");
+            }
+            catch (Exception ex)  
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Error Message: " + ex.ToString());  
+            }  
         }
 
         [HttpPost()]
         [Route("remotenotify")]
-        public IHttpActionResult RemoteNotification()
+        public HttpResponseMessage RemoteNotification()
         {
-            return Ok("Remote Notification is successfully completed");
+            try
+            {
+                return Request.CreateResponse(HttpStatusCode.Gone, " Successfully Sent ");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Error Message : " + ex.ToString());
+            }
         }
         
     }
