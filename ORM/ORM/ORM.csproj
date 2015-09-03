@@ -96,25 +96,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201508250955474_InitialSetup.cs" />
-    <Compile Include="Migrations\201508250955474_InitialSetup.Designer.cs">
-      <DependentUpon>201508250955474_InitialSetup.cs</DependentUpon>
+    <Compile Include="Migrations\201508270654123_PluralizingRemove.cs" />
+    <Compile Include="Migrations\201508270654123_PluralizingRemove.Designer.cs">
+      <DependentUpon>201508270654123_PluralizingRemove.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201508251116472_TableCreation.cs" />
-    <Compile Include="Migrations\201508251116472_TableCreation.Designer.cs">
-      <DependentUpon>201508251116472_TableCreation.cs</DependentUpon>
+    <Compile Include="Migrations\201508280723226_AddUNIQUEKey.cs" />
+    <Compile Include="Migrations\201508280723226_AddUNIQUEKey.Designer.cs">
+      <DependentUpon>201508280723226_AddUNIQUEKey.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201508251118153_TableCreation1.cs" />
-    <Compile Include="Migrations\201508251118153_TableCreation1.Designer.cs">
-      <DependentUpon>201508251118153_TableCreation1.cs</DependentUpon>
+    <Compile Include="Migrations\201508280726449_AddRemoteCustomerTable.cs" />
+    <Compile Include="Migrations\201508280726449_AddRemoteCustomerTable.Designer.cs">
+      <DependentUpon>201508280726449_AddRemoteCustomerTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201508251119287_TableCreation2.cs" />
-    <Compile Include="Migrations\201508251119287_TableCreation2.Designer.cs">
-      <DependentUpon>201508251119287_TableCreation2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508251127279_TableCreation3.cs" />
-    <Compile Include="Migrations\201508251127279_TableCreation3.Designer.cs">
-      <DependentUpon>201508251127279_TableCreation3.cs</DependentUpon>
+    <Compile Include="Migrations\201508280733421_AddRemoteCustomerActiveStatus.cs" />
+    <Compile Include="Migrations\201508280733421_AddRemoteCustomerActiveStatus.Designer.cs">
+      <DependentUpon>201508280733421_AddRemoteCustomerActiveStatus.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuditLog.cs" />
@@ -122,6 +118,7 @@
     <Compile Include="Models\EmailLog.cs" />
     <Compile Include="Models\EventType.cs" />
     <Compile Include="Models\POCContext.cs" />
+    <Compile Include="Models\RemoteCustomer.cs" />
     <Compile Include="Models\ServiceArea.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -141,20 +138,17 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201508250955474_InitialSetup.resx">
-      <DependentUpon>201508250955474_InitialSetup.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201508270654123_PluralizingRemove.resx">
+      <DependentUpon>201508270654123_PluralizingRemove.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508251116472_TableCreation.resx">
-      <DependentUpon>201508251116472_TableCreation.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201508280723226_AddUNIQUEKey.resx">
+      <DependentUpon>201508280723226_AddUNIQUEKey.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508251118153_TableCreation1.resx">
-      <DependentUpon>201508251118153_TableCreation1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201508280726449_AddRemoteCustomerTable.resx">
+      <DependentUpon>201508280726449_AddRemoteCustomerTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508251119287_TableCreation2.resx">
-      <DependentUpon>201508251119287_TableCreation2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508251127279_TableCreation3.resx">
-      <DependentUpon>201508251127279_TableCreation3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201508280733421_AddRemoteCustomerActiveStatus.resx">
+      <DependentUpon>201508280733421_AddRemoteCustomerActiveStatus.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

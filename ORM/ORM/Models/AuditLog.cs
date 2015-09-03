@@ -9,7 +9,7 @@ namespace ORM.Models
 {
     public class AuditLog
     {
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int transid { get; set; }
 
         [ForeignKey("User")]

@@ -4,6 +4,7 @@ namespace ORM.Models
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using System.Data.Entity.ModelConfiguration.Conventions;
 
     public partial class POCContext : DbContext
     {
@@ -17,10 +18,11 @@ namespace ORM.Models
         public DbSet<EventType> EventType { get; set; }
         public DbSet<AuditLog> AuditLog { get; set; }
         public DbSet<EmailLog> EmailLog { get; set; }
+        public DbSet<RemoteCustomer> RemoteCustomer { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
     }
 }
