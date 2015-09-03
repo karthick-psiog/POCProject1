@@ -1,0 +1,661 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="POCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AuditLog">
+          <Key>
+            <PropertyRef Name="transid" />
+          </Key>
+          <Property Name="userid" Type="int" Nullable="false" />
+          <Property Name="eventtypeid" Type="int" Nullable="false" />
+          <Property Name="transid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="source" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="logmessage" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="logtimestamp" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="userid" />
+            <PropertyRef Name="mobile" />
+          </Key>
+          <Property Name="userid" Type="int" Nullable="false" />
+          <Property Name="mobile" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="PIN" Type="nvarchar" MaxLength="6" />
+          <Property Name="DOB" Type="datetime" Nullable="false" />
+          <Property Name="firstname" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="lastname" Type="nvarchar" MaxLength="25" />
+          <Property Name="address" Type="nvarchar" MaxLength="1500" Nullable="false" />
+          <Property Name="city" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="state" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="country" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmailLog">
+          <Key>
+            <PropertyRef Name="transid" />
+          </Key>
+          <Property Name="transid" Type="int" Nullable="false" />
+          <Property Name="emailaddress" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="emailstatus" Type="int" Nullable="false" />
+          <Property Name="senttimestamp" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EventType">
+          <Key>
+            <PropertyRef Name="eventtypeid" />
+          </Key>
+          <Property Name="eventtypeid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="eventtype" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="isactive" Type="bit" />
+        </EntityType>
+        <EntityType Name="RemoteCustomer">
+          <Key>
+            <PropertyRef Name="remoteuserid" />
+          </Key>
+          <Property Name="remoteuserid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mobile" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="DOB" Type="datetime" Nullable="false" />
+          <Property Name="firstname" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="lastname" Type="nvarchar" MaxLength="25" />
+          <Property Name="address" Type="nvarchar" MaxLength="1500" Nullable="false" />
+          <Property Name="city" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PIN" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="state" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="country" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="isactive" Type="bit" />
+        </EntityType>
+        <EntityType Name="ServiceArea">
+          <Key>
+            <PropertyRef Name="PIN" />
+          </Key>
+          <Property Name="PIN" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="isactive" Type="bit" />
+          <Property Name="city" Type="nvarchar" MaxLength="50" />
+          <Property Name="state" Type="nvarchar" MaxLength="50" />
+          <Property Name="country" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="userid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="encryptedpwd" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="createddate" Type="datetime" Nullable="false" />
+          <Property Name="lastmodifieddate" Type="datetime" />
+          <Property Name="lastlogindate" Type="datetime" />
+          <Property Name="isactive" Type="bit" />
+        </EntityType>
+        <Association Name="FK_dbo_AuditLog_dbo_EventType_eventtypeid">
+          <End Role="EventType" Type="Self.EventType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AuditLog" Type="Self.AuditLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventType">
+              <PropertyRef Name="eventtypeid" />
+            </Principal>
+            <Dependent Role="AuditLog">
+              <PropertyRef Name="eventtypeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AuditLog_dbo_User_userid">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AuditLog" Type="Self.AuditLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="AuditLog">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Customer_dbo_ServiceArea_PIN">
+          <End Role="ServiceArea" Type="Self.ServiceArea" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceArea">
+              <PropertyRef Name="PIN" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="PIN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Customer_dbo_User_userid">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_EmailLog_dbo_AuditLog_transid">
+          <End Role="AuditLog" Type="Self.AuditLog" Multiplicity="1" />
+          <End Role="EmailLog" Type="Self.EmailLog" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AuditLog">
+              <PropertyRef Name="transid" />
+            </Principal>
+            <Dependent Role="EmailLog">
+              <PropertyRef Name="transid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="spCheckAvailability" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="mobile" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="spCheckRemoteAvailability" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="mobile" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="spGetServiceAreas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PIN" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spInsertCustomer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="encryptedpwd" Type="nvarchar" Mode="In" />
+          <Parameter Name="mobile" Type="nvarchar" Mode="In" />
+          <Parameter Name="PIN" Type="nvarchar" Mode="In" />
+          <Parameter Name="DOB" Type="datetime" Mode="In" />
+          <Parameter Name="firstname" Type="nvarchar" Mode="In" />
+          <Parameter Name="lastname" Type="nvarchar" Mode="In" />
+          <Parameter Name="address" Type="nvarchar" Mode="In" />
+          <Parameter Name="city" Type="nvarchar" Mode="In" />
+          <Parameter Name="state" Type="nvarchar" Mode="In" />
+          <Parameter Name="country" Type="nvarchar" Mode="In" />
+          <Parameter Name="userid" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="spInsertEmailLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userid" Type="int" Mode="In" />
+          <Parameter Name="eventtypeid" Type="int" Mode="In" />
+          <Parameter Name="source" Type="nvarchar" Mode="In" />
+          <Parameter Name="logmessage" Type="nvarchar" Mode="In" />
+          <Parameter Name="emailaddress" Type="nvarchar" Mode="In" />
+          <Parameter Name="emailstatus" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spInsertTransLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userid" Type="int" Mode="In" />
+          <Parameter Name="eventtypeid" Type="int" Mode="In" />
+          <Parameter Name="source" Type="nvarchar" Mode="In" />
+          <Parameter Name="logmessage" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="POCModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AuditLog" EntityType="Self.AuditLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmailLog" EntityType="Self.EmailLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventType" EntityType="Self.EventType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RemoteCustomer" EntityType="Self.RemoteCustomer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceArea" EntityType="Self.ServiceArea" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_AuditLog_dbo_EventType_eventtypeid" Association="Self.FK_dbo_AuditLog_dbo_EventType_eventtypeid">
+            <End Role="EventType" EntitySet="EventType" />
+            <End Role="AuditLog" EntitySet="AuditLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AuditLog_dbo_User_userid" Association="Self.FK_dbo_AuditLog_dbo_User_userid">
+            <End Role="User" EntitySet="User" />
+            <End Role="AuditLog" EntitySet="AuditLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Customer_dbo_ServiceArea_PIN" Association="Self.FK_dbo_Customer_dbo_ServiceArea_PIN">
+            <End Role="ServiceArea" EntitySet="ServiceArea" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Customer_dbo_User_userid" Association="Self.FK_dbo_Customer_dbo_User_userid">
+            <End Role="User" EntitySet="User" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_EmailLog_dbo_AuditLog_transid" Association="Self.FK_dbo_EmailLog_dbo_AuditLog_transid">
+            <End Role="AuditLog" EntitySet="AuditLog" />
+            <End Role="EmailLog" EntitySet="EmailLog" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="POCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AuditLog">
+          <Key>
+            <PropertyRef Name="transid" />
+          </Key>
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <Property Name="eventtypeid" Type="Int32" Nullable="false" />
+          <Property Name="transid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="source" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="logmessage" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="logtimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="EventType" Relationship="Self.FK_dbo_AuditLog_dbo_EventType_eventtypeid" FromRole="AuditLog" ToRole="EventType" />
+          <NavigationProperty Name="User" Relationship="Self.FK_dbo_AuditLog_dbo_User_userid" FromRole="AuditLog" ToRole="User" />
+          <NavigationProperty Name="EmailLog" Relationship="Self.FK_dbo_EmailLog_dbo_AuditLog_transid" FromRole="AuditLog" ToRole="EmailLog" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="userid" />
+            <PropertyRef Name="mobile" />
+          </Key>
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <Property Name="mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PIN" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="firstname" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="lastname" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ServiceArea" Relationship="Self.FK_dbo_Customer_dbo_ServiceArea_PIN" FromRole="Customer" ToRole="ServiceArea" />
+          <NavigationProperty Name="User" Relationship="Self.FK_dbo_Customer_dbo_User_userid" FromRole="Customer" ToRole="User" />
+        </EntityType>
+        <EntityType Name="EmailLog">
+          <Key>
+            <PropertyRef Name="transid" />
+          </Key>
+          <Property Name="transid" Type="Int32" Nullable="false" />
+          <Property Name="emailaddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="emailstatus" Type="Int32" Nullable="false" />
+          <Property Name="senttimestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AuditLog" Relationship="Self.FK_dbo_EmailLog_dbo_AuditLog_transid" FromRole="EmailLog" ToRole="AuditLog" />
+        </EntityType>
+        <EntityType Name="EventType">
+          <Key>
+            <PropertyRef Name="eventtypeid" />
+          </Key>
+          <Property Name="eventtypeid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="eventtype1" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="isactive" Type="Boolean" />
+          <NavigationProperty Name="AuditLogs" Relationship="Self.FK_dbo_AuditLog_dbo_EventType_eventtypeid" FromRole="EventType" ToRole="AuditLog" />
+        </EntityType>
+        <EntityType Name="RemoteCustomer">
+          <Key>
+            <PropertyRef Name="remoteuserid" />
+          </Key>
+          <Property Name="remoteuserid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="firstname" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="lastname" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PIN" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="isactive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="ServiceArea">
+          <Key>
+            <PropertyRef Name="PIN" />
+          </Key>
+          <Property Name="PIN" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK_dbo_Customer_dbo_ServiceArea_PIN" FromRole="ServiceArea" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="userid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="encryptedpwd" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="createddate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="lastmodifieddate" Type="DateTime" Precision="3" />
+          <Property Name="lastlogindate" Type="DateTime" Precision="3" />
+          <Property Name="isactive" Type="Boolean" />
+          <NavigationProperty Name="AuditLogs" Relationship="Self.FK_dbo_AuditLog_dbo_User_userid" FromRole="User" ToRole="AuditLog" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK_dbo_Customer_dbo_User_userid" FromRole="User" ToRole="Customer" />
+        </EntityType>
+        <Association Name="FK_dbo_AuditLog_dbo_EventType_eventtypeid">
+          <End Role="EventType" Type="Self.EventType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AuditLog" Type="Self.AuditLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventType">
+              <PropertyRef Name="eventtypeid" />
+            </Principal>
+            <Dependent Role="AuditLog">
+              <PropertyRef Name="eventtypeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AuditLog_dbo_User_userid">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AuditLog" Type="Self.AuditLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="AuditLog">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_EmailLog_dbo_AuditLog_transid">
+          <End Role="AuditLog" Type="Self.AuditLog" Multiplicity="1" />
+          <End Role="EmailLog" Type="Self.EmailLog" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AuditLog">
+              <PropertyRef Name="transid" />
+            </Principal>
+            <Dependent Role="EmailLog">
+              <PropertyRef Name="transid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Customer_dbo_ServiceArea_PIN">
+          <End Role="ServiceArea" Type="Self.ServiceArea" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceArea">
+              <PropertyRef Name="PIN" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="PIN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Customer_dbo_User_userid">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="POCDBContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="AuditLogs" EntityType="Self.AuditLog" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="EmailLogs" EntityType="Self.EmailLog" />
+          <EntitySet Name="EventTypes" EntityType="Self.EventType" />
+          <EntitySet Name="RemoteCustomers" EntityType="Self.RemoteCustomer" />
+          <EntitySet Name="ServiceAreas" EntityType="Self.ServiceArea" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_dbo_AuditLog_dbo_EventType_eventtypeid" Association="Self.FK_dbo_AuditLog_dbo_EventType_eventtypeid">
+            <End Role="EventType" EntitySet="EventTypes" />
+            <End Role="AuditLog" EntitySet="AuditLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AuditLog_dbo_User_userid" Association="Self.FK_dbo_AuditLog_dbo_User_userid">
+            <End Role="User" EntitySet="Users" />
+            <End Role="AuditLog" EntitySet="AuditLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_EmailLog_dbo_AuditLog_transid" Association="Self.FK_dbo_EmailLog_dbo_AuditLog_transid">
+            <End Role="AuditLog" EntitySet="AuditLogs" />
+            <End Role="EmailLog" EntitySet="EmailLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Customer_dbo_ServiceArea_PIN" Association="Self.FK_dbo_Customer_dbo_ServiceArea_PIN">
+            <End Role="ServiceArea" EntitySet="ServiceAreas" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Customer_dbo_User_userid" Association="Self.FK_dbo_Customer_dbo_User_userid">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <FunctionImport Name="spCheckAvailability" ReturnType="Collection(Int32)">
+          <Parameter Name="mobile" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spCheckRemoteAvailability" ReturnType="Collection(POCModel.spCheckRemoteAvailability_Result)">
+          <Parameter Name="mobile" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spGetServiceAreas" ReturnType="Collection(POCModel.spGetServiceAreas_Result)">
+          <Parameter Name="PIN" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spInsertCustomer">
+            <Parameter Name="encryptedpwd" Mode="In" Type="String" />
+            <Parameter Name="mobile" Mode="In" Type="String" />
+            <Parameter Name="PIN" Mode="In" Type="String" />
+            <Parameter Name="DOB" Mode="In" Type="DateTime" />
+            <Parameter Name="firstname" Mode="In" Type="String" />
+            <Parameter Name="lastname" Mode="In" Type="String" />
+            <Parameter Name="address" Mode="In" Type="String" />
+            <Parameter Name="city" Mode="In" Type="String" />
+            <Parameter Name="state" Mode="In" Type="String" />
+            <Parameter Name="country" Mode="In" Type="String" />
+            <Parameter Name="userid" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spInsertEmailLog">
+            <Parameter Name="userid" Mode="In" Type="Int32" />
+            <Parameter Name="eventtypeid" Mode="In" Type="Int32" />
+            <Parameter Name="source" Mode="In" Type="String" />
+            <Parameter Name="logmessage" Mode="In" Type="String" />
+            <Parameter Name="emailaddress" Mode="In" Type="String" />
+            <Parameter Name="emailstatus" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spInsertTransLog">
+            <Parameter Name="userid" Mode="In" Type="Int32" />
+            <Parameter Name="eventtypeid" Mode="In" Type="Int32" />
+            <Parameter Name="source" Mode="In" Type="String" />
+            <Parameter Name="logmessage" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="FunGetServiceArea" EntitySet="ServiceAreas" ReturnType="Collection(POCModel.ServiceArea)">
+          <Parameter Name="PIN" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="FunInsertCustomer" ReturnType="Collection(Int32)">
+            <Parameter Name="encryptedpwd" Mode="In" Type="String" />
+            <Parameter Name="mobile" Mode="In" Type="String" />
+            <Parameter Name="PIN" Mode="In" Type="String" />
+            <Parameter Name="DOB" Mode="In" Type="DateTime" />
+            <Parameter Name="firstname" Mode="In" Type="String" />
+            <Parameter Name="lastname" Mode="In" Type="String" />
+            <Parameter Name="address" Mode="In" Type="String" />
+            <Parameter Name="city" Mode="In" Type="String" />
+            <Parameter Name="state" Mode="In" Type="String" />
+            <Parameter Name="country" Mode="In" Type="String" />
+            <Parameter Name="userid" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="spCheckRemoteAvailability_Result">
+          <Property Type="Int32" Name="remoteuserid" Nullable="false" />
+          <Property Type="String" Name="mobile" Nullable="false" MaxLength="15" />
+          <Property Type="DateTime" Name="DOB" Nullable="false" Precision="23" />
+          <Property Type="String" Name="firstname" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="lastname" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="address" Nullable="false" MaxLength="1500" />
+          <Property Type="String" Name="city" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="PIN" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="state" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="country" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="spGetServiceAreas_Result">
+          <Property Type="String" Name="PIN" Nullable="false" MaxLength="6" />
+          <Property Type="Boolean" Name="isactive" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="ServiceAreas">
+          <Property Type="String" Name="PIN" Nullable="false" MaxLength="6" />
+          <Property Type="Boolean" Name="isactive" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetServiceArea_Result">
+          <Property Type="String" Name="PIN" Nullable="false" MaxLength="6" />
+          <Property Type="Boolean" Name="isactive" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="ServiceAreaList">
+          <Property Type="String" Name="PIN" Nullable="false" MaxLength="6" />
+          <Property Type="Boolean" Name="isactive" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="POCModelStoreContainer" CdmEntityContainer="POCDBContext">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="POCModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuditLogs">
+            <EntityTypeMapping TypeName="POCModel.AuditLog">
+              <MappingFragment StoreEntitySet="AuditLog">
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="eventtypeid" ColumnName="eventtypeid" />
+                <ScalarProperty Name="transid" ColumnName="transid" />
+                <ScalarProperty Name="source" ColumnName="source" />
+                <ScalarProperty Name="logmessage" ColumnName="logmessage" />
+                <ScalarProperty Name="logtimestamp" ColumnName="logtimestamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="POCModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="PIN" ColumnName="PIN" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="country" ColumnName="country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailLogs">
+            <EntityTypeMapping TypeName="POCModel.EmailLog">
+              <MappingFragment StoreEntitySet="EmailLog">
+                <ScalarProperty Name="transid" ColumnName="transid" />
+                <ScalarProperty Name="emailaddress" ColumnName="emailaddress" />
+                <ScalarProperty Name="emailstatus" ColumnName="emailstatus" />
+                <ScalarProperty Name="senttimestamp" ColumnName="senttimestamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventTypes">
+            <EntityTypeMapping TypeName="POCModel.EventType">
+              <MappingFragment StoreEntitySet="EventType">
+                <ScalarProperty Name="eventtypeid" ColumnName="eventtypeid" />
+                <ScalarProperty Name="eventtype1" ColumnName="eventtype" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RemoteCustomers">
+            <EntityTypeMapping TypeName="POCModel.RemoteCustomer">
+              <MappingFragment StoreEntitySet="RemoteCustomer">
+                <ScalarProperty Name="remoteuserid" ColumnName="remoteuserid" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="PIN" ColumnName="PIN" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceAreas">
+            <EntityTypeMapping TypeName="POCModel.ServiceArea">
+              <MappingFragment StoreEntitySet="ServiceArea">
+                <ScalarProperty Name="PIN" ColumnName="PIN" />
+                </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="POCModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="encryptedpwd" ColumnName="encryptedpwd" />
+                <ScalarProperty Name="createddate" ColumnName="createddate" />
+                <ScalarProperty Name="lastmodifieddate" ColumnName="lastmodifieddate" />
+                <ScalarProperty Name="lastlogindate" ColumnName="lastlogindate" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spCheckAvailability" FunctionName="POCModel.Store.spCheckAvailability" />
+          <FunctionImportMapping FunctionImportName="spCheckRemoteAvailability" FunctionName="POCModel.Store.spCheckRemoteAvailability">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="POCModel.spCheckRemoteAvailability_Result">
+                <ScalarProperty Name="remoteuserid" ColumnName="remoteuserid" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="PIN" ColumnName="PIN" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="country" ColumnName="country" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spGetServiceAreas" FunctionName="POCModel.Store.spGetServiceAreas">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="POCModel.spGetServiceAreas_Result">
+                <ScalarProperty Name="PIN" ColumnName="PIN" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spInsertCustomer" FunctionName="POCModel.Store.spInsertCustomer" />
+          <FunctionImportMapping FunctionImportName="spInsertEmailLog" FunctionName="POCModel.Store.spInsertEmailLog" />
+          <FunctionImportMapping FunctionImportName="spInsertTransLog" FunctionName="POCModel.Store.spInsertTransLog" />
+          <FunctionImportMapping FunctionImportName="FunGetServiceArea" FunctionName="POCModel.Store.spGetServiceAreas">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FunInsertCustomer" FunctionName="POCModel.Store.spInsertCustomer" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
