@@ -7,23 +7,35 @@ using BusinessObjects.DAL;
 namespace BusinessObjects.BAL
 {
     class ServiceAreaImpl:IServiceArea,IServiceability
-    {   
-        public ServiceAreaImpl() { }
+    {
+        string _pin;
+      //  public ServiceAreaImpl() { }    //Comment the default constructor to avoid create object without pin. 
+       
         public ServiceAreaImpl(string p) 
         {
-            Pin = p;
+            _pin = p;
         }
 
-        public string Pin { get; private set { } }
+        public string Pin { get { return _pin; } private set { _pin = value; } }
 
-        List<string> IServiceArea.getServiceAreas()
+        
+
+        public  List<ServiceArea> getServiceAreas()
         {
-            return DataStore.getServiceAreas();
+            return DataStore.getServiceAreas(Pin);
         }
 
-        bool IServiceArea.findByPin()
+       
+        public   bool checkServiceability()
         {
-            return DataStore.findByPin(Pin);            
+            dynamic servicearea = DataStore.getServiceAreas(Pin);
+            return (servicearea.Count == 0) ? false : true;
+        }
+
+        
+        public bool findByPin(string pin)
+        {
+            return DataStore.findByPin(Pin);      
         }
     }
 }
