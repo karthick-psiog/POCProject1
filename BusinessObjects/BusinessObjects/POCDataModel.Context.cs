@@ -220,5 +220,47 @@ namespace BusinessObjects
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("FunInsertCustomer", encryptedpwdParameter, mobileParameter, pINParameter, dOBParameter, firstnameParameter, lastnameParameter, addressParameter, cityParameter, stateParameter, countryParameter, userid);
         }
+    
+        public virtual ObjectResult<spGetCustomer_Result> spGetCustomer(Nullable<int> userid)
+        {
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetCustomer_Result>("spGetCustomer", useridParameter);
+        }
+    
+        public virtual ObjectResult<Customer> FunGetCustomer(Nullable<int> userid)
+        {
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Customer>("FunGetCustomer", useridParameter);
+        }
+    
+        public virtual ObjectResult<Customer> FunGetCustomer(Nullable<int> userid, MergeOption mergeOption)
+        {
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Customer>("FunGetCustomer", mergeOption, useridParameter);
+        }
+    
+        public virtual ObjectResult<spGetEventType_Result> spGetEventType()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetEventType_Result>("spGetEventType");
+        }
+    
+        public virtual ObjectResult<EventType> FunGetEventType()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EventType>("FunGetEventType");
+        }
+    
+        public virtual ObjectResult<EventType> FunGetEventType(MergeOption mergeOption)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EventType>("FunGetEventType", mergeOption);
+        }
     }
 }

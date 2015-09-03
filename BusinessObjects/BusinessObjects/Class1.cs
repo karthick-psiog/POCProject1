@@ -15,7 +15,9 @@ namespace BusinessObjects
             BusinessObjects.BAL.ServiceAreaImpl SAI = new BusinessObjects.BAL.ServiceAreaImpl("");
             BusinessObjects.BAL.CustomerImpl CI = new CustomerImpl();
             BusinessObjects.BAL.CustomerRegistration CR = new CustomerRegistration();
-            CR.checkUserExists("98745632");
+             Customer customerlist = CR.getUser(5);
+             
+            Console.WriteLine(customerlist.firstname);
 
             Customer customer = new Customer();
             customer.address = "no5 anandaroad";
@@ -24,21 +26,27 @@ namespace BusinessObjects
             customer.DOB = DateTime.Today;
             customer.firstname = "Kumar";
             customer.lastname = "CM";
-            customer.mobile = "9874563212";
+            customer.mobile = "9874563222";
             customer.PIN = "600017";
             customer.state = "Tamilnadu";
-            if (CI.saveUser(customer, "hellopwd")) { Console.WriteLine("Inserted Successfully"); } else { Console.WriteLine("Failed to Insert"); }
+            if (CI.saveUser(customer, "hellopwd")) 
+                { 
+                    Console.WriteLine("Inserted Successfully"); 
+                } 
+            else 
+                { 
+                    Console.WriteLine("Failed to Insert"); 
+                }
 
 
-            dynamic SArea= SAI.getServiceAreas();
+            Console.WriteLine(CR.checkUserRemoteExists("9874563210"));
+            Console.WriteLine(CR.checkUserExists("9874563222"));
 
-
-
+            dynamic SArea = SAI.getServiceAreas();
             foreach (var item in SArea)
             {
                 Console.WriteLine(item.PIN); 
             }
-
             Console.WriteLine(SAI.checkServiceability());
     
         }

@@ -56,13 +56,21 @@
     <Compile Include="AuditLog.cs">
       <DependentUpon>POCDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="BAL\CreationalFactory.cs" />
     <Compile Include="BAL\CustomerImpl.cs" />
     <Compile Include="BAL\CustomerRegistration.cs" />
+    <Compile Include="BAL\EmailService.cs" />
     <Compile Include="BAL\ICustomer.cs" />
+    <Compile Include="BAL\IEmailService.cs" />
+    <Compile Include="BAL\ILogService.cs" />
+    <Compile Include="BAL\INotification.cs" />
     <Compile Include="BAL\IRegistrationService.cs" />
     <Compile Include="BAL\IServiceability.cs" />
     <Compile Include="BAL\IServiceArea.cs" />
+    <Compile Include="BAL\LogServiceImpl.cs" />
+    <Compile Include="BAL\NotificationImpl.cs" />
     <Compile Include="BAL\ServiceAreaImpl.cs" />
+    <Compile Include="BAL\Types.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Customer.cs">
       <DependentUpon>POCDataModel.tt</DependentUpon>
@@ -109,6 +117,12 @@
       <DependentUpon>POCDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="spCheckRemoteAvailability_Result.cs">
+      <DependentUpon>POCDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spGetCustomer_Result.cs">
+      <DependentUpon>POCDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spGetEventType_Result.cs">
       <DependentUpon>POCDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="spGetServiceAreas_Result.cs">

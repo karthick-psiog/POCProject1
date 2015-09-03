@@ -34,7 +34,15 @@ namespace BusinessObjects.DAL
                    return customer;
                } 
            }
-
+        
+        public static Customer getUser(int userid)
+        {
+            using (POCDBContext context = new POCDBContext())
+            {
+                dynamic customer  = context.FunGetCustomer(userid).FirstOrDefault(); 
+                return (Customer) customer;
+            }
+        }
         public static Customer findUserByEmail(string email) 
         {
             using (POCDBContext context = new POCDBContext())
@@ -54,7 +62,6 @@ namespace BusinessObjects.DAL
                 return availability;
             }
         }
-                
         public static bool saveUser(Customer customer, string password)
         {
             using (POCDBContext context = new POCDBContext())
@@ -64,17 +71,55 @@ namespace BusinessObjects.DAL
                return ((int)userid.Value == 0) ? false : true;
             }
         }
-
-        public static bool checkUserRemoteAvailability(string mobile)
+        public static RemoteCustomer checkUserRemoteAvailability(string mobile)
         {
             using (POCDBContext context = new POCDBContext())
             {
-                bool availability = false;
-                ObjectResult OR = context.spCheckAvailability(mobile);
-                foreach (dynamic R in OR) availability = (R > 0) ? true : false;
-                return availability;
+                RemoteCustomer customer = new RemoteCustomer();
+                dynamic customers = context.spCheckRemoteAvailability(mobile).FirstOrDefault();
+
+                if (customers != null)
+                {
+                    customer.address = customers.address;
+                    customer.mobile = customers.mobile;
+                    customer.DOB = customers.DOB;
+                    customer.firstname = customers.firstname;
+                    customer.lastname = customers.lastname;
+                    customer.address = customers.address;
+                    customer.city = customers.city;
+                    customer.PIN = customers.PIN;
+                    customer.state = customers.state;
+                    customer.country = customers.country;
+                }
+                else
+                    customer = (RemoteCustomer)customers; 
+                return  customer;
             }
         }
 
+        public static List<Dictionary<string, int>> getEventTypes()
+        {
+            using (POCDBContext context = new POCDBContext())
+            {
+               dynamic eventtypes = context.FunGetEventType();
+               return eventtypes;
+            } 
+        }
+
+        public static void writeEventLog(AuditLog AL) 
+        {
+            using (POCDBContext context = new POCDBContext()) 
+                {
+                 context.spInsertTransLog(AL.userid, AL.eventtypeid, AL.source, AL.logmessage);
+                 }
+        }
+
+        public static void writeEmailLog(EmailLog EL,AuditLog AL)
+        {
+            using (POCDBContext context = new POCDBContext())
+            {
+                context.spInsertEmailLog(AL.userid, AL.eventtypeid, AL.source, AL.logmessage, EL.emailaddress, EL.emailstatus);
+            }
+        }
     }
 }

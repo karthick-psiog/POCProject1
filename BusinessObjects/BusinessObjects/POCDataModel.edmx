@@ -168,6 +168,10 @@
         <Function Name="spCheckRemoteAvailability" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="mobile" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="spGetCustomer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spGetEventType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spGetServiceAreas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PIN" Type="varchar" Mode="In" />
         </Function>
@@ -476,6 +480,15 @@
             <Parameter Name="country" Mode="In" Type="String" />
             <Parameter Name="userid" Mode="InOut" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="spGetCustomer" ReturnType="Collection(POCModel.spGetCustomer_Result)">
+          <Parameter Name="userid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="FunGetCustomer" EntitySet="Customers" ReturnType="Collection(POCModel.Customer)">
+          <Parameter Name="userid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spGetEventType" ReturnType="Collection(POCModel.spGetEventType_Result)" />
+          <FunctionImport Name="FunGetEventType" EntitySet="EventTypes" ReturnType="Collection(POCModel.EventType)">
+            </FunctionImport>
         </EntityContainer>
         <ComplexType Name="spCheckRemoteAvailability_Result">
           <Property Type="Int32" Name="remoteuserid" Nullable="false" />
@@ -504,6 +517,22 @@
         <ComplexType Name="ServiceAreaList">
           <Property Type="String" Name="PIN" Nullable="false" MaxLength="6" />
           <Property Type="Boolean" Name="isactive" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spGetCustomer_Result">
+          <Property Type="Int32" Name="userid" Nullable="false" />
+          <Property Type="String" Name="mobile" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="PIN" Nullable="true" MaxLength="6" />
+          <Property Type="DateTime" Name="DOB" Nullable="false" Precision="23" />
+          <Property Type="String" Name="firstname" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="lastname" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="address" Nullable="false" MaxLength="1500" />
+          <Property Type="String" Name="city" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="state" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="country" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="spGetEventType_Result">
+          <Property Type="Int32" Name="eventtypeid" Nullable="false" />
+          <Property Type="String" Name="EventType" Nullable="false" MaxLength="150" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -635,6 +664,32 @@
           <FunctionImportMapping FunctionImportName="FunGetServiceArea" FunctionName="POCModel.Store.spGetServiceAreas">
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="FunInsertCustomer" FunctionName="POCModel.Store.spInsertCustomer" />
+          <FunctionImportMapping FunctionImportName="spGetCustomer" FunctionName="POCModel.Store.spGetCustomer">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="POCModel.spGetCustomer_Result">
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="PIN" ColumnName="PIN" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="country" ColumnName="country" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FunGetCustomer" FunctionName="POCModel.Store.spGetCustomer" />
+          <FunctionImportMapping FunctionImportName="spGetEventType" FunctionName="POCModel.Store.spGetEventType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="POCModel.spGetEventType_Result">
+                <ScalarProperty Name="eventtypeid" ColumnName="eventtypeid" />
+                <ScalarProperty Name="EventType" ColumnName="EventType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FunGetEventType" FunctionName="POCModel.Store.spGetEventType" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

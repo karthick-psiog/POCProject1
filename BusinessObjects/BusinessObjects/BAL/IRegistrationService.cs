@@ -10,5 +10,6 @@ namespace BusinessObjects.BAL
     {
         bool checkUserExists(string mobile);
         bool registerUser(Customer customer,string password);
+        Customer getUser(int userid);
     }
 }
