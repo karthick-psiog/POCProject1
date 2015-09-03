@@ -31,7 +31,7 @@ namespace APIWebServices.Controllers
                     return Request.CreateResponse(HttpStatusCode.OK, "False");
                 else
                     return Request.CreateResponse(HttpStatusCode.OK, "True");
-             }
+            }
             catch (Exception ex)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Error Message : " + ex.ToString());
@@ -65,7 +65,7 @@ namespace APIWebServices.Controllers
                 if (mobilenum == null)
                     return Request.CreateResponse(HttpStatusCode.OK, "False");
                 else
-                    return Request.CreateResponse(HttpStatusCode.OK, "True");
+                    return Request.CreateResponse(HttpStatusCode.OK, User);
             }
             catch (Exception ex)
             {
@@ -89,7 +89,7 @@ namespace APIWebServices.Controllers
 
         [HttpPost()]
         [Route("remotenotify")]
-        public HttpResponseMessage RemoteNotification()
+        public HttpResponseMessage RemoteNotification(User userinfo)
         {
             try
             {
