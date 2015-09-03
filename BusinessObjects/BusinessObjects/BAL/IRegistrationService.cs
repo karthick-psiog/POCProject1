@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace BusinessObjects.BAL
 {
-    interface IServiceArea
+    interface IRegistrationService
     {
-        string Pin { get;}
-         List<ServiceArea> getServiceAreas();
-        bool findByPin(string pin);
+        bool checkUserExists(string mobile);
+        bool registerUser(Customer customer,string password);
     }
 }
