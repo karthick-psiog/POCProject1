@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Data;
 using System.Data.Entity.Core.Objects;
+
 namespace BusinessObjects.DAL
 {
-    class DataStore
+    public class DataStore
     {
         public static List<ServiceArea> getServiceAreas(string pin) 
         {
