@@ -6,16 +6,15 @@ using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Web.Http;
-using BusinessObjects;
-
+using BusinessObjects.BAL; 
+ 
 namespace APIWebServices.Controllers
 {
     [RoutePrefix("")]
-    
     //[Authorize]
     public class POCDataController : ApiController
     {
-        BusinessObjects.
+        CustomerRegistration CR = new CustomerRegistration();
 
         [Route("")]
         public IHttpActionResult Get()
@@ -30,13 +29,11 @@ namespace APIWebServices.Controllers
         public HttpResponseMessage CheckAvailability(String mobilenum)
         {
             try
-            { 
-                
-
-                if (mobilenum == null)
-                    return Request.CreateResponse(HttpStatusCode.OK, "False");
-                else
+            {
+                if (CR.checkUserExists(mobilenum))
                     return Request.CreateResponse(HttpStatusCode.OK, "True");
+                else
+                    return Request.CreateResponse(HttpStatusCode.OK, "False");
             }
             catch (Exception ex)
             {
