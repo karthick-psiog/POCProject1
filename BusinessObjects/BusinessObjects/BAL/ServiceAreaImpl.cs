@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using BusinessObjects.DAL;
 namespace BusinessObjects.BAL
 {
-    class ServiceAreaImpl:IServiceArea,IServiceability
+    public class ServiceAreaImpl:IServiceArea,IServiceability
     {
         string _pin;
       //  public ServiceAreaImpl() { }    //Comment the default constructor to avoid create object without pin. 
@@ -26,7 +26,7 @@ namespace BusinessObjects.BAL
         }
 
        
-        public   bool checkServiceability()
+        public bool checkServiceability()
         {
             dynamic servicearea = DataStore.getServiceAreas(Pin);
             return (servicearea.Count == 0) ? false : true;

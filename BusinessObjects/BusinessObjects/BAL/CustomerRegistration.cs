@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BusinessObjects.BAL
 {
-    class CustomerRegistration:IRegistrationService
+    public class CustomerRegistration:IRegistrationService
     {
         public bool checkUserExists(string mobile)
         {

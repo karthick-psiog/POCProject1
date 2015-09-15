@@ -24,5 +24,7 @@ namespace APIWebServices.Models
         public String state { get; set; }
 
         public String country { get; set; }
+
+        public String Pwd { get; set; }
     }
 }

@@ -14,7 +14,11 @@ namespace APIWebServices.Controllers
     //[Authorize]
     public class POCDataController : ApiController
     {
-        CustomerRegistration CR = new CustomerRegistration();
+        CustomerRegistration objCustReg = new CustomerRegistration();
+
+        CustomerImpl objCustImp = new CustomerImpl();
+
+        NotificationImpl objNotiImp = new NotificationImpl();
 
         [Route("")]
         public IHttpActionResult Get()
@@ -30,7 +34,7 @@ namespace APIWebServices.Controllers
         {
             try
             {
-                if (CR.checkUserExists(mobilenum))
+                if (objCustReg.checkUserExists(mobilenum))
                     return Request.CreateResponse(HttpStatusCode.OK, "True");
                 else
                     return Request.CreateResponse(HttpStatusCode.OK, "False");
@@ -46,11 +50,13 @@ namespace APIWebServices.Controllers
         public HttpResponseMessage CheckServiceability(String PINCode)
         {
             try
-            { 
-                if (PINCode == null)
-                    return Request.CreateResponse(HttpStatusCode.OK, "False");
+            {
+                ServiceAreaImpl objSAreaImp = new ServiceAreaImpl(PINCode);
+
+                if (objSAreaImp.checkServiceability())
+                    return Request.CreateResponse(HttpStatusCode.OK, "True");
                 else
-                    return Request.CreateResponse(HttpStatusCode.OK, "True"); 
+                    return Request.CreateResponse(HttpStatusCode.OK, "False"); 
             }
             catch (Exception ex)
             {
@@ -60,15 +66,17 @@ namespace APIWebServices.Controllers
         }
 
         [HttpGet()]
-        [Route("remotecustomer/mobile/{mobilenum}")]
-        public HttpResponseMessage CheckRemoteAvailability(String mobilenum)
+        [Route("remotecustomer/mobile/{mobile}")]
+        public HttpResponseMessage CheckRemoteAvailability(String mobile)
         {
             try
-            { 
-                if (mobilenum == null)
+            {
+                var remotecustomer = objCustReg.checkUserRemoteExists(mobile);
+
+                if (remotecustomer == null)
                     return Request.CreateResponse(HttpStatusCode.OK, "False");
                 else
-                    return Request.CreateResponse(HttpStatusCode.OK, User);
+                    return Request.CreateResponse(HttpStatusCode.OK, remotecustomer);
             }
             catch (Exception ex)
             {
@@ -82,12 +90,28 @@ namespace APIWebServices.Controllers
         {
             try
             {
-                return Request.CreateResponse(HttpStatusCode.OK, " Successfully Registered " + userinfo.firstname);
+                BusinessObjects.Customer customer = new BusinessObjects.Customer();
+                customer.firstname = userinfo.firstname;
+                customer.lastname = userinfo.lastname;
+                customer.address = userinfo.address;
+                customer.city = userinfo.city;
+                customer.state = userinfo.state;
+                customer.country = userinfo.country; 
+                customer.PIN = userinfo.PIN;
+                customer.DOB = userinfo.DOB;
+                customer.mobile = userinfo.mobile;
+
+                if (objCustImp.saveUser(customer, userinfo.Pwd))
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, "True");
+                }
+                else
+                { return Request.CreateResponse(HttpStatusCode.OK, "False"); }
             }
             catch (Exception ex)  
             {
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Error Message: " + ex.ToString());  
-            }  
+            }
         }
 
         [HttpPost()]
@@ -96,7 +120,23 @@ namespace APIWebServices.Controllers
         {
             try
             {
-                return Request.CreateResponse(HttpStatusCode.OK, " Successfully Sent ");
+                BusinessObjects.Customer customer = new BusinessObjects.Customer();
+                customer.firstname = userinfo.firstname;
+                customer.lastname = userinfo.lastname;
+                customer.address = userinfo.address;
+                customer.city = userinfo.city;
+                customer.state = userinfo.state;
+                customer.country = userinfo.country;
+                customer.PIN = userinfo.PIN;
+                customer.DOB = userinfo.DOB;
+                customer.mobile = userinfo.mobile;
+
+                if (objNotiImp.notifyRemote(customer))
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, "True");
+                }
+                else
+                { return Request.CreateResponse(HttpStatusCode.OK, "False"); }
             }
             catch (Exception ex)
             {

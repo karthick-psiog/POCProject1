@@ -7,7 +7,7 @@ using BusinessObjects.DAL;
 
 namespace BusinessObjects.BAL
 {
-    class CustomerImpl : ICustomer
+    public class CustomerImpl : ICustomer
     {
         public bool saveUser(Customer customer,string password) {
            return DataStore.saveUser(customer, password);

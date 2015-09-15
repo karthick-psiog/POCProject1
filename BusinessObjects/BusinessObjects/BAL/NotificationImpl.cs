@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessObjects.BAL
 {
-    class NotificationImpl:INotification
+    public class NotificationImpl:INotification
     {
 
      public bool notifyRemote(Customer customer)
