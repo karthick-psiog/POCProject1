@@ -11,7 +11,7 @@ namespace BusinessObjects.BAL
 
      public bool notifyRemote(Customer customer)
         {
-            return true;
+            return true; 
         }
     }
 }
