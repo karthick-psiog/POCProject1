@@ -127,6 +127,7 @@
     <Content Include="Reference\BusinessObjects.dll" />
     <Content Include="Global.asax" />
     <Content Include="Reference\BusinessObjects.dll.config" />
+    <None Include="Properties\PublishProfiles\POCRestfulWebAPI.pubxml" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Reference\BusinessObjects.pdb" />
     <Content Include="Scripts\jquery-1.6.4.js" />

@@ -11,7 +11,7 @@ using BusinessObjects.BAL;
 namespace APIWebServices.Controllers
 {
     [RoutePrefix("")]
-    //[Authorize]
+    [Authorize]
     public class POCDataController : ApiController
     {
         CustomerRegistration objCustReg = new CustomerRegistration();
@@ -23,8 +23,8 @@ namespace APIWebServices.Controllers
         [Route("")]
         public IHttpActionResult Get()
         {
-            //ClaimsPrincipal principal = Request.GetRequestContext().Principal as ClaimsPrincipal;
-            //var userName = principal.Claims.Where(c => c.Type == "sub").Single().Value;
+            ClaimsPrincipal principal = Request.GetRequestContext().Principal as ClaimsPrincipal;
+            var userName = principal.Claims.Where(c => c.Type == "sub").Single().Value;
             return Ok("You are allowed to request data");
         }
 
